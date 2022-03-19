@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+
 
 public class InputConsoleTest {
 
@@ -24,12 +24,26 @@ public class InputConsoleTest {
 
     @Test
     public void checkconvertNumeral(){
-        System.setIn(new ByteArrayInputStream("I".getBytes()));
+        System.setIn(new ByteArrayInputStream("I\n".getBytes()));
         MyMainClass.main(new String[0]);
-        String outputText = byteArrayOutputStream.toString();
-        String key = "number";
-        String output = outputText.substring(outputText.indexOf(key) + key.length()).trim();
-        Assertions.assertEquals("I", output);
+        String[] outputLines  = byteArrayOutputStream.toString().split("\n");
+        Assertions.assertEquals("You converted the Roman Numeral I to the number 1.", outputLines[1]);
+    }
+
+    @Test
+    public void checkconvertInvalidNumeral(){
+        System.setIn(new ByteArrayInputStream("L\n".getBytes()));
+        MyMainClass.main(new String[0]);
+        String[] outputLines  = byteArrayOutputStream.toString().split("\n");
+        Assertions.assertEquals("The Roman Numeral L, you entered is invalid.", outputLines[1]);
+    }
+
+    @Test
+    public void checkconvertEmptyInput(){
+        System.setIn(new ByteArrayInputStream("\n".getBytes()));
+        MyMainClass.main(new String[0]);
+        String[] outputLines  = byteArrayOutputStream.toString().split("\n");
+        Assertions.assertEquals("No Numeral entered.", outputLines[1]);
     }
 
     @AfterEach

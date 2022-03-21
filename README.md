@@ -3,7 +3,7 @@
 ## Goal of the application
  This console application 'roman_numerals_converter' receives the roman numeral as input and provides the equivalent number. 
  
-## Key Features of your application
+## Key Features of the application
  The application provies the following additional features:
  
  It allows the user to enter multiple times until he enters 'exit' to quit the application. 

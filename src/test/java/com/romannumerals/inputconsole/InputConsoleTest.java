@@ -31,11 +31,20 @@ public class InputConsoleTest {
     }
 
     @Test
-    public void checkconvertInvalidNumeral(){
-        System.setIn(new ByteArrayInputStream("L\n".getBytes()));
+    public void checkconvertNumeralAbove2000(){
+        System.setIn(new ByteArrayInputStream("MMXVIII\n".getBytes()));
         MyMainClass.main(new String[0]);
         String[] outputLines  = byteArrayOutputStream.toString().split("\n");
-        Assertions.assertEquals("The Roman Numeral L, you entered is invalid. Please enter a valid Roman Numeral or 'exit' to quit.", outputLines[1]);
+        Assertions.assertEquals("You converted the Roman Numeral MMXVIII to the number 2018. Please enter another roman numeral or 'exit' to quit.", outputLines[1]);
+    }
+
+
+    @Test
+    public void checkconvertInvalidNumeral(){
+        System.setIn(new ByteArrayInputStream("B\n".getBytes()));
+        MyMainClass.main(new String[0]);
+        String[] outputLines  = byteArrayOutputStream.toString().split("\n");
+        Assertions.assertEquals("The Roman Numeral B, you entered is invalid (should include only I,V,X,L,C,D & M). Please enter a valid Roman Numeral or 'exit' to quit.", outputLines[1]);
     }
 
     @Test
@@ -52,6 +61,18 @@ public class InputConsoleTest {
         MyMainClass.main(new String[0]);
         String[] outputLines  = byteArrayOutputStream.toString().split("\n");
         Assertions.assertEquals("Hope you enjoyed our conversion program.", outputLines[1]);
+    }
+
+    @Test
+    public void checkInput(){
+        InputConsole ic = new InputConsole(stdin,stdout);
+        Assertions.assertEquals(true,ic.checkIfRoman("XXIV"));
+    }
+
+    @Test
+    public void checkInvalidInput(){
+        InputConsole ic = new InputConsole(stdin,stdout);
+        Assertions.assertEquals(false,ic.checkIfRoman("XXPV"));
     }
 
     @AfterEach
